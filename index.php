@@ -45,38 +45,38 @@ require "connection.php";
                                 <p class="title02">Create New Account</p>
                             </div>
 
-                            <div class="col-12 d-none" id="msgdiv1">
+                            <div class="col-12 d-none" id="msgdiv">
                                 <div class="alert alert-danger" role="alert" id="msg"></div>
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">First Name</label>
-                                <input type="text" class="form-control" placeholder="Ex: Jhon" />
+                                <input type="text" class="form-control" placeholder="Ex: Jhon" id="fname"/>
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">First Name</label>
-                                <input type="text" class="form-control" placeholder="Ex: Doe" />
+                                <input type="text" class="form-control" placeholder="Ex: Doe" id="lname"/>
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Ex: jhon@gmail.com" />
+                                <input type="email" class="form-control" placeholder="Ex: jhon@gmail.com" id="email"/>
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label">Password</label>
-                                <input type="email" class="form-control" placeholder="Ex: Doe" />
+                                <input type="password" class="form-control" id="password"/>
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">Mobile</label>
-                                <input type="text" class="form-control" placeholder="Ex: 0712345678" />
+                                <input type="text" class="form-control" placeholder="Ex: 0712345678" id="mobile"/>
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">Gender</label>
-                                <select class="form-select">
+                                <select class="form-select" id="gender">
                                     <?php
                                     $rs = Database::search("SELECT * FROM `gender`");
                                     $num = $rs->num_rows;
@@ -92,7 +92,7 @@ require "connection.php";
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-primary">Sign In</button>
+                                <button class="btn btn-primary" onclick="signUp();">Sign In</button>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
@@ -148,6 +148,13 @@ require "connection.php";
                         </div>
                     </div>
                     <!-- signInBox -->
+
+                    <!-- footer -->
+                     <div class="col-12 fixed-bottom">
+                        <p class="text-center">&copy; 2024 eShop.lk | All Rights Reserved</p>
+                        <p class="text-center fw-bold">Designed By : 2024 Rhino Batch</p>
+                     </div>
+                    <!-- footer -->
 
                 </div>
             </div>
