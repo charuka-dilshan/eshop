@@ -51,27 +51,27 @@ require "connection.php";
 
                             <div class="col-6">
                                 <label class="form-label">First Name</label>
-                                <input type="text" class="form-control" placeholder="Ex: Jhon" id="fname"/>
+                                <input type="text" class="form-control" placeholder="Ex: Jhon" id="fname" />
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">First Name</label>
-                                <input type="text" class="form-control" placeholder="Ex: Doe" id="lname"/>
+                                <input type="text" class="form-control" placeholder="Ex: Doe" id="lname" />
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Ex: jhon@gmail.com" id="email"/>
+                                <input type="email" class="form-control" placeholder="Ex: jhon@gmail.com" id="email" />
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password"/>
+                                <input type="password" class="form-control" id="password" />
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">Mobile</label>
-                                <input type="text" class="form-control" placeholder="Ex: 0712345678" id="mobile"/>
+                                <input type="text" class="form-control" placeholder="Ex: 0712345678" id="mobile" />
                             </div>
 
                             <div class="col-6">
@@ -81,18 +81,18 @@ require "connection.php";
                                     $rs = Database::search("SELECT * FROM `gender`");
                                     $num = $rs->num_rows;
 
-                                    for($x=0 ; $x<$num ; $x++){
+                                    for ($x = 0; $x < $num; $x++) {
                                         $data = $rs->fetch_assoc();
-                                        ?>
-                                        <option value="<?php echo $data["gender_id"] ; ?>"><?php echo $data["gender_name"] ; ?></option>
-                                        <?php
+                                    ?>
+                                        <option value="<?php echo $data["gender_id"]; ?>"><?php echo $data["gender_name"]; ?></option>
+                                    <?php
                                     }
                                     ?>
                                 </select>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-primary" onclick="signUp();">Sign In</button>
+                                <button class="btn btn-primary" onclick="signUp();">Sign Up</button>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
@@ -110,32 +110,45 @@ require "connection.php";
                             </div>
 
                             <div class="col-12 d-none" id="msgdiv1">
-                                <div class="alert alert-danger" role="alert" id="msg"></div>
+                                <div class="alert alert-danger" role="alert" id="msg1"></div>
                             </div>
+
+                            <?php
+                            $email = "";
+                            $password = "";
+
+                            if (isset($_COOKIE["email"])) {
+                                $email = $_COOKIE["email"];
+                            }
+
+                            if (isset($_COOKIE["password"])) {
+                                $password = $_COOKIE["password"];
+                            }
+                            ?>
 
                             <div class="col-12">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control">
+                                <input type="email" class="form-control" id="email2" value="<?php echo ($email); ?>">
                             </div>
 
                             <div class="col-12">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" class="form-control" id="password2" value="<?php echo ($password) ?>">
                             </div>
 
                             <div class="col-6">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
                                     <label class="form-check-label fw-bold">Remember Me</label>
                                 </div>
                             </div>
 
                             <div class="col-6 text-end">
-                                <a href="#" class="link-primary fw-bold">Forgot Password</a>
+                                <a onclick="forgotPassword();" class="link-primary fw-bold">Forgot Password</a>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-primary">Sign Up</button>
+                                <button class="btn btn-primary" onclick="signIn();">Sign Up</button>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
@@ -149,11 +162,50 @@ require "connection.php";
                     </div>
                     <!-- signInBox -->
 
+                    <!-- modal -->
+                    <div class="modal" tabindex="-1" id="fpmodal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Forgot Password</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-3">
+                                        <div class="col-12 col-lg-6">
+                                            <label class="form-label">New Password</label>
+                                            <div class="input-group mb-3">
+                                                <input type="password" class="form-control" id="np">
+                                                <button class="btn btn-outline-secondary" type="button" id="npb" onclick="showPassword1();">Show</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <label class="form-label">Retype Password</label>
+                                            <div class="input-group mb-3">
+                                                <input type="password" class="form-control" id="rp">
+                                                <button class="btn btn-outline-secondary" type="button" id="rpb" onclick="showPassword2();">Show</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Verification Code</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Reset Password </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal -->
+
                     <!-- footer -->
-                     <div class="col-12 fixed-bottom">
+                    <div class="col-12 fixed-bottom">
                         <p class="text-center">&copy; 2024 eShop.lk | All Rights Reserved</p>
                         <p class="text-center fw-bold">Designed By : 2024 Rhino Batch</p>
-                     </div>
+                    </div>
                     <!-- footer -->
 
                 </div>
@@ -163,6 +215,7 @@ require "connection.php";
         </div>
     </div>
     <script src="js/script.js"></script>
+    <script src="js/bootstrap.js"></script>
 </body>
 
 </html>
