@@ -31,7 +31,7 @@ function signUp(){
             if(resp == "success"){
                 document.getElementById("msg").innerHTML = "Registration Successfull !";
                 document.getElementById("msg").className = "alert alert-success";
-                document.getElementById("magdiv").className = "d-block" ;
+                document.getElementById("msgdiv").className = "d-block" ;
                 changeView();
             }else{
                 document.getElementById("msg").innerHTML = resp;
@@ -42,4 +42,69 @@ function signUp(){
 
     req.open("POST" , "signUpProcess.php" , true);
     req.send(form);
+}
+
+function signIn(){
+
+    var email = document.getElementById("email2");
+    var password = document.getElementById("password2");
+    var rememberMe = document.getElementById("rememberMe");
+
+    var form = new FormData();
+
+    form.append("e" , email.value);
+    form.append("p" , password.value);
+    form.append("r" , rememberMe.checked);
+
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function(){
+        if(req.readyState == 4 && req.status == 200){
+            var resp = req.responseText;
+            if (resp == "success") {
+                window.location = "home.php"
+            } else {
+                document.getElementById("msg1").innerHTML = resp ;
+                document.getElementById("msgdiv1").className = "d-block";
+            }
+        }
+    }
+
+    req.open("POST" , "signInProcess.php" , true);
+    req.send(form);
+
+}
+
+var forgotPasswordModal;
+
+function forgotPassword(){
+    var modal = document.getElementById("fpmodal");
+    forgotPasswordModal = new bootstrap.Modal(modal);
+    forgotPasswordModal.show();
+}
+
+function showPassword1(){
+    var textField =  document.getElementById("np");
+    var button = document.getElementById("npb");
+
+    if(textField.type == "password"){
+        textField.type = "text";
+        button.innerHTML = "Hide";
+    }else{
+        textField.type = "password";
+        button.innerHTML = "Show";
+    }
+}
+
+function showPassword2(){
+    var textField =  document.getElementById("rp");
+    var button = document.getElementById("rpb");
+
+    if(textField.type == "password"){
+        textField.type = "text";
+        button.innerHTML = "Hide";
+    }else{
+        textField.type = "password";
+        button.innerHTML = "Show";
+    }
 }
