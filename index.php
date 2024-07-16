@@ -148,7 +148,7 @@ require "connection.php";
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
-                                <button class="btn btn-primary" onclick="signIn();">Sign Up</button>
+                                <button class="btn btn-primary" onclick="signIn();">Sign In</button>
                             </div>
 
                             <div class="col-12 col-lg-6 d-grid">
@@ -188,13 +188,13 @@ require "connection.php";
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label">Verification Code</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" id="vcode"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Reset Password </button>
+                                    <button type="button" class="btn btn-primary" onclick="resetPassword();">Reset Password </button>
                                 </div>
                             </div>
                         </div>

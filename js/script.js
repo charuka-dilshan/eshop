@@ -1,4 +1,4 @@
-function changeView(){
+function changeView() {
     var signInBox = document.getElementById("signInBox");
     var signUpBox = document.getElementById("signUpBox");
 
@@ -6,7 +6,7 @@ function changeView(){
     signUpBox.classList.toggle("d-none");
 }
 
-function signUp(){
+function signUp() {
     var fname = document.getElementById("fname");
     var lname = document.getElementById("lname");
     var email = document.getElementById("email");
@@ -16,35 +16,35 @@ function signUp(){
 
     var form = new FormData();
 
-    form.append("f" , fname.value);
-    form.append("l" , lname.value);
-    form.append("e" , email.value);
-    form.append("m" , mobile.value);
-    form.append("p" , password.value);
-    form.append("g" , gender.value);
+    form.append("f", fname.value);
+    form.append("l", lname.value);
+    form.append("e", email.value);
+    form.append("m", mobile.value);
+    form.append("p", password.value);
+    form.append("g", gender.value);
 
     var req = new XMLHttpRequest();
 
-    req.onreadystatechange = function(){
-        if(req.readyState == 4 && req.status == 200){
+    req.onreadystatechange = function () {
+        if (req.readyState == 4 && req.status == 200) {
             var resp = req.responseText;
-            if(resp == "success"){
+            if (resp == "success") {
                 document.getElementById("msg").innerHTML = "Registration Successfull !";
                 document.getElementById("msg").className = "alert alert-success";
-                document.getElementById("msgdiv").className = "d-block" ;
+                document.getElementById("msgdiv").className = "d-block";
                 changeView();
-            }else{
+            } else {
                 document.getElementById("msg").innerHTML = resp;
                 document.getElementById("msgdiv").className = "d-block";
             }
         }
     }
 
-    req.open("POST" , "signUpProcess.php" , true);
+    req.open("POST", "signUpProcess.php", true);
     req.send(form);
 }
 
-function signIn(){
+function signIn() {
 
     var email = document.getElementById("email2");
     var password = document.getElementById("password2");
@@ -52,59 +52,114 @@ function signIn(){
 
     var form = new FormData();
 
-    form.append("e" , email.value);
-    form.append("p" , password.value);
-    form.append("r" , rememberMe.checked);
+    form.append("e", email.value);
+    form.append("p", password.value);
+    form.append("r", rememberMe.checked);
 
     var req = new XMLHttpRequest();
 
-    req.onreadystatechange = function(){
-        if(req.readyState == 4 && req.status == 200){
+    req.onreadystatechange = function () {
+        if (req.readyState == 4 && req.status == 200) {
             var resp = req.responseText;
             if (resp == "success") {
                 window.location = "home.php"
             } else {
-                document.getElementById("msg1").innerHTML = resp ;
+                document.getElementById("msg1").innerHTML = resp;
                 document.getElementById("msgdiv1").className = "d-block";
             }
         }
     }
 
-    req.open("POST" , "signInProcess.php" , true);
+    req.open("POST", "signInProcess.php", true);
     req.send(form);
 
 }
 
 var forgotPasswordModal;
 
-function forgotPassword(){
-    var modal = document.getElementById("fpmodal");
-    forgotPasswordModal = new bootstrap.Modal(modal);
-    forgotPasswordModal.show();
+function forgotPassword() {
+
+
+    var email = document.getElementById("email2");
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function () {
+        if (req.status == 200 && req.readyState == 4) {
+            var resp = req.responseText;
+            if (resp == "success") {
+                alert("Verification Code Has Sent Successfully To Your Email.");
+                var modal = document.getElementById("fpmodal");
+                forgotPasswordModal = new bootstrap.Modal(modal);
+                forgotPasswordModal.show();
+            } else {
+            
+                document.getElementById("msg1").innerHTML = resp;
+                document.getElementById("msgdiv1").className = "d-block";
+
+            }
+        }
+    }
+
+    req.open("GET", "forgotPasswordProcess.php?e=" + email.value, true);
+    req.send();
 }
 
-function showPassword1(){
-    var textField =  document.getElementById("np");
+function showPassword1() {
+    var textField = document.getElementById("np");
     var button = document.getElementById("npb");
 
-    if(textField.type == "password"){
+    if (textField.type == "password") {
         textField.type = "text";
         button.innerHTML = "Hide";
-    }else{
+    } else {
         textField.type = "password";
         button.innerHTML = "Show";
     }
 }
 
-function showPassword2(){
-    var textField =  document.getElementById("rp");
+function showPassword2() {
+    var textField = document.getElementById("rp");
     var button = document.getElementById("rpb");
 
-    if(textField.type == "password"){
+    if (textField.type == "password") {
         textField.type = "text";
         button.innerHTML = "Hide";
-    }else{
+    } else {
         textField.type = "password";
         button.innerHTML = "Show";
     }
+}
+
+function resetPassword(){
+
+    var email = document.getElementById("email2");
+    var newPassword = document.getElementById("np");
+    var reTypedPassword = document.getElementById("rp");
+    var verificationCode = document.getElementById("vcode");
+
+    var form = new FormData();
+
+    form.append("e" , email.value);
+    form.append("np" , newPassword.value);
+    form.append("rp" , reTypedPassword.value);
+    form.append("v" , verificationCode.value);
+
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function(){
+        if(req.readyState == 4 && req.status == 200){
+            var resp = req.responseText;
+
+            if(resp == "success"){
+                alert("Password updated successfully");
+                forgotPasswordModal.hide();
+            }else{
+                alert(resp);
+            }
+
+        }
+    }
+
+    req.open("POST" , "resetPasswordProcess.php" , true);
+    req.send(form);
+
 }

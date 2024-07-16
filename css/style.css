@@ -45,3 +45,38 @@
     font-size: 25px;
     font-weight: bold;
 }
+
+.cart-icon{
+    background-image: url("resource/cartico.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.poster-img-1{
+    height: 500px;
+    background-repeat: no-repeat;
+}
+
+.poster-caption{
+    margin-bottom: 200px;
+}
+
+.poster-caption-1{
+    margin-bottom: 70px;
+    margin-right: 280px;
+}
+
+.poster-title{
+    color: black;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.poster-txt{
+    font-size: 20px;
+    color: gray;
+}
+
+.signout:hover{
+    cursor: pointer;
+}
