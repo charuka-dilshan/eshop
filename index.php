@@ -202,7 +202,7 @@ require "connection.php";
                     <!-- modal -->
 
                     <!-- footer -->
-                    <div class="col-12 fixed-bottom">
+                    <div class="col-12 position-relative fixed-bottom">
                         <p class="text-center">&copy; 2024 eShop.lk | All Rights Reserved</p>
                         <p class="text-center fw-bold">Designed By : 2024 Rhino Batch</p>
                     </div>
