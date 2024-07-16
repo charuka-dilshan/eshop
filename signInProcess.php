@@ -28,7 +28,7 @@ if(empty($email)){
         $data = $rs->fetch_assoc();
         $_SESSION["u"] = $data;
 
-        if ($rememberMe = "true") {
+        if ($rememberMe == "true") {
             setcookie("email",$email , time()+(60*60*24*365));
             setcookie("password",$password , time()+(60*60*24*365));
         }
