@@ -19,7 +19,23 @@
 
             <div class="offset-lg-1 col-12 col-lg-3 align-self-start mt-2">
 
-                <a href="index.php" class="text-decoration-none fw-bold">Sign In or Register</a> |
+                <?php
+
+                session_start();
+                if (isset($_SESSION["u"])) {
+                $data = $_SESSION["u"];
+                ?>
+                    <span class="text-lg-start text-success"><b>Hi!, </b> <?php echo ($data["fname"]) ?></span> |
+                    <span class="text-lg-start fw-bold signout" onclick="signOut();">Signout</span> |
+                <?php
+                } else {
+                ?>
+                    <a href="index.php" class="text-decoration-none fw-bold">Sign In or Register</a> |
+                <?php
+                }
+
+                ?>
+
                 <span class="text-lg-start fw-bold">Help and Contact</span>
 
             </div>
