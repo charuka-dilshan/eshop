@@ -180,3 +180,35 @@ function signOut(){
     req.send();
 
 }
+
+function showPassword3(){
+
+    var pw = document.getElementById("pw");
+    var pwi = document.getElementById("pwi");
+
+    if(pw.type == "password"){
+        pw.type = "text";
+        pwi.className = "bi bi-eye-fill text-white";
+    }else{
+        pw.type = "password";
+        pwi.className = "bi bi-eye-slash-fill text-white";
+    }
+
+}
+
+function selectDistrict(){
+
+    var province_id = document.getElementById("province").value;
+
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function(){
+        if(req.readyState == 4 && req.status == 200){
+            var resp = req.responseText;
+            document.getElementById("district").innerHTML = resp;
+        }
+    }
+
+    req.open("GET" , "selectDistrictProcess.php?id="+province_id , true);
+    req.send();
+
+}
