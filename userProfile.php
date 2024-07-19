@@ -105,9 +105,9 @@
                                             <div class="col-12">
                                                 <label class="form-label">Password</label>
                                                 <div class="input-group">
-                                                    <input type="password" class="form-control" value="abcdef" readonly />
-                                                    <span class="input-group-text bg-primary" id="basic-addon2">
-                                                        <i class="bi bi-eye-slash-fill text-white"></i>
+                                                    <input type="password" class="form-control" value="abcdef" id="pw" readonly />
+                                                    <span class="input-group-text bg-primary" id="basic-addon2" onclick="showPassword3();">
+                                                        <i class="bi bi-eye-slash-fill text-white" id="pwi"></i>
                                                     </span>
                                                 </div>
                                             </div>
@@ -124,27 +124,97 @@
 
                                             <div class="col-12">
                                                 <label class="form-label">Address Line 01</label>
-                                                <input type="text" class="form-control" />
+
+                                                <?php
+
+                                                if (!isset($address_data["line1"])) {
+                                                ?>
+                                                    <input type="text" class="form-control" placeholder="Type address line 01" />
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <input type="text" class="form-control" value="<?php echo $address_data["line1"] ?>" />
+                                                <?php
+                                                }
+
+                                                ?>
+
                                             </div>
 
                                             <div class="col-12">
                                                 <label class="form-label">Address Line 02</label>
-                                                <input type="text" class="form-control" />
+                                                <?php
+                                                if (!isset($address_data["line2"])) {
+                                                ?>
+                                                    <input type="text" class="form-control" placeholder="Type address line 02" />
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <input type="text" class="form-control" value="<?php echo $address_data["line2"] ?>" />
+                                                <?php
+                                                }
+
+                                                ?>
                                             </div>
+
+                                            <?php
+
+                                            $province_rs = Database::search("SELECT * FROM `province`");
+                                            $district_rs = Database::search("SELECT * FROM `district`");
+                                            $city_rs = Database::search("SELECT * FROM `city`");
+
+                                            ?>
 
                                             <div class="col-6">
                                                 <label class="form-label">Province</label>
-                                                <select class="form-select">
+                                                <select class="form-select" onchange="selectDistrict();" id="province">
                                                     <option value="0">Select Province</option>
-                                                    <option value="1">Colombo</option>
+                                                    <?php
+
+                                                    for ($x = 0; $x < $province_rs->num_rows; $x++) {
+                                                        $province_data = $province_rs->fetch_assoc();
+                                                    ?>
+                                                        <option value="<?php echo $province_data["province_id"] ?> 
+                                                        <?php
+
+                                                        if (!empty($address_data["province_id"])) {
+                                                            if ($province_data["province_id"] == $address_data["province_id"]) {
+                                                        ?>
+                                                                selected
+                                                                <?php
+                                                            }
+                                                        }
+
+                                                                ?>"><?php echo $province_data["province_name"] ?></option>
+                                                    <?php
+                                                    }
+
+                                                    ?>
                                                 </select>
                                             </div>
 
                                             <div class="col-6">
                                                 <label class="form-label">District</label>
-                                                <select class="form-select">
+                                                <select class="form-select" id="district">
                                                     <option value="0">Select District</option>
-                                                    <option value="1">Kaluthara</option>
+                                                    <?php
+
+                                                    for ($x = 0; $x < $district_rs->num_rows; $x++) {
+                                                        $district_data = $district_rs->fetch_assoc();
+                                                    ?>
+                                                        <option value="<?php echo $district_data["district_id"] ?>" <?php
+
+                                                                                                                    if (!empty($address_data["district_id"])) {
+                                                                                                                        if ($district_data["district_id"] == $address_data["district_id"]) {
+                                                                                                                    ?> selected <?php
+                                                                                                                            }
+                                                                                                                        }
+
+                                                                                                                                ?>><?php echo $district_data["district_name"] ?></option>
+                                                    <?php
+                                                    }
+
+                                                    ?>
 
                                                 </select>
                                             </div>
@@ -153,14 +223,47 @@
                                                 <label class="form-label">City</label>
                                                 <select class="form-select">
                                                     <option value="0">Select City</option>
-                                                    <option value="1">Kaluthara</option>
+                                                    <?php
+
+                                                    for ($x = 0; $x < $city_rs->num_rows; $x++) {
+                                                        $city_data = $city_rs->fetch_assoc();
+                                                    ?>
+                                                        <option value="<?php echo $city_data["city_id"] ?>" <?php
+
+                                                                                                            if (!empty($address_data["city_id"])) {
+                                                                                                                if ($city_data["city_id"] == $address_data["city_id"]) {
+                                                                                                            ?> selected <?php
+                                                                                                                    }
+                                                                                                                }
+
+                                                                                                                        ?>>
+                                                            <?php echo $city_data["city_name"] ?>
+                                                        </option>
+                                                    <?php
+                                                    }
+
+                                                    ?>
 
                                                 </select>
                                             </div>
 
                                             <div class="col-6">
                                                 <label class="form-label">Postal Code</label>
-                                                <input type="text" class="form-control" />
+
+                                                <?php
+
+                                                if (empty($address_data["postal_code"])) {
+                                                ?>
+                                                    <input type="text" class="form-control" placeholder="Enter Your Postal Code" />
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <input type="text" class="form-control" value="<?php echo $address_data["postal_code"] ?>" />
+                                                <?php
+                                                }
+
+                                                ?>
+
                                             </div>
 
                                             <div class="col-12">
