@@ -58,11 +58,11 @@
 
                                         if (empty($image_data["img_path"])) {
                                         ?>
-                                            <img src="resources/new_user.svg" class="rounded mt-5" style="width: 150px;" />
+                                            <img src="resources/new_user.svg" class="rounded mt-5" style="width: 150px;" id="img"/>
                                         <?php
                                         } else {
                                         ?>
-                                            <img src="<?php echo $image_data["img_path"]; ?>" class="rounded mt-5" style="width: 150px;" />
+                                            <img src="<?php echo $image_data["img_path"]; ?>" class="rounded mt-5" style="width: 150px;" id="img"/>
                                         <?php
                                         }
 
@@ -73,7 +73,7 @@
                                         <span class="fw-bold text-black-50"><?php echo $details_data["email"] ?></span>
 
                                         <input type="file" class="d-none" id="profileimage" />
-                                        <label for="profileimage" class="btn btn-primary mt-5">Update Profile Image</label>
+                                        <label for="profileimage" class="btn btn-primary mt-5" onclick="changeProfileImg();">Update Profile Image</label>
 
                                     </div>
                                 </div>
@@ -89,17 +89,17 @@
 
                                             <div class="col-6">
                                                 <label class="form-label">First Name</label>
-                                                <input type="text" class="form-control" value="<?php echo $details_data["fname"] ?>" />
+                                                <input type="text" class="form-control" value="<?php echo $details_data["fname"] ?>" id="fname"/>
                                             </div>
 
                                             <div class="col-6">
                                                 <label class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" value="<?php echo $details_data["lname"] ?>" />
+                                                <input type="text" class="form-control" value="<?php echo $details_data["lname"] ?>" id="lname"/>
                                             </div>
 
                                             <div class="col-12">
                                                 <label class="form-label">Mobile</label>
-                                                <input type="text" class="form-control" value="<?php echo $details_data["mobile"] ?>" />
+                                                <input type="text" class="form-control" value="<?php echo $details_data["mobile"] ?>" id="mobile"/>
                                             </div>
 
                                             <div class="col-12">
@@ -129,11 +129,11 @@
 
                                                 if (!isset($address_data["line1"])) {
                                                 ?>
-                                                    <input type="text" class="form-control" placeholder="Type address line 01" />
+                                                    <input type="text" class="form-control" placeholder="Type address line 01" id="line1"/>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <input type="text" class="form-control" value="<?php echo $address_data["line1"] ?>" />
+                                                    <input type="text" class="form-control" value="<?php echo $address_data["line1"] ?>" id="line1"/>
                                                 <?php
                                                 }
 
@@ -146,11 +146,11 @@
                                                 <?php
                                                 if (!isset($address_data["line2"])) {
                                                 ?>
-                                                    <input type="text" class="form-control" placeholder="Type address line 02" />
+                                                    <input type="text" class="form-control" placeholder="Type address line 02" id="line2"/>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <input type="text" class="form-control" value="<?php echo $address_data["line2"] ?>" />
+                                                    <input type="text" class="form-control" value="<?php echo $address_data["line2"] ?>" id="line2"/>
                                                 <?php
                                                 }
 
@@ -221,7 +221,7 @@
 
                                             <div class="col-6">
                                                 <label class="form-label">City</label>
-                                                <select class="form-select">
+                                                <select class="form-select" id="city">
                                                     <option value="0">Select City</option>
                                                     <?php
 
@@ -254,11 +254,11 @@
 
                                                 if (empty($address_data["postal_code"])) {
                                                 ?>
-                                                    <input type="text" class="form-control" placeholder="Enter Your Postal Code" />
+                                                    <input type="text" class="form-control" placeholder="Enter Your Postal Code" id="pcode"/>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                    <input type="text" class="form-control" value="<?php echo $address_data["postal_code"] ?>" />
+                                                    <input type="text" class="form-control" value="<?php echo $address_data["postal_code"] ?>" id="pcode"/>
                                                 <?php
                                                 }
 
@@ -272,7 +272,7 @@
                                             </div>
 
                                             <div class="col-12 d-grid mt-2">
-                                                <button class="btn btn-primary">Update My Profile</button>
+                                                <button class="btn btn-primary" onclick="updateProfile();">Update My Profile</button>
                                             </div>
 
                                         </div>

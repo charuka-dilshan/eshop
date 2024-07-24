@@ -92,7 +92,7 @@ function forgotPassword() {
                 forgotPasswordModal = new bootstrap.Modal(modal);
                 forgotPasswordModal.show();
             } else {
-            
+
                 document.getElementById("msg1").innerHTML = resp;
                 document.getElementById("msgdiv1").className = "d-block";
 
@@ -130,7 +130,7 @@ function showPassword2() {
     }
 }
 
-function resetPassword(){
+function resetPassword() {
 
     var email = document.getElementById("email2");
     var newPassword = document.getElementById("np");
@@ -139,76 +139,138 @@ function resetPassword(){
 
     var form = new FormData();
 
-    form.append("e" , email.value);
-    form.append("np" , newPassword.value);
-    form.append("rp" , reTypedPassword.value);
-    form.append("v" , verificationCode.value);
+    form.append("e", email.value);
+    form.append("np", newPassword.value);
+    form.append("rp", reTypedPassword.value);
+    form.append("v", verificationCode.value);
 
     var req = new XMLHttpRequest();
-    req.onreadystatechange = function(){
-        if(req.readyState == 4 && req.status == 200){
+    req.onreadystatechange = function () {
+        if (req.readyState == 4 && req.status == 200) {
             var resp = req.responseText;
 
-            if(resp == "success"){
+            if (resp == "success") {
                 alert("Password updated successfully");
                 forgotPasswordModal.hide();
-            }else{
+            } else {
                 alert(resp);
             }
 
         }
     }
 
-    req.open("POST" , "resetPasswordProcess.php" , true);
+    req.open("POST", "resetPasswordProcess.php", true);
     req.send(form);
 
 }
 
-function signOut(){
+function signOut() {
 
     var req = new XMLHttpRequest();
-    req.onreadystatechange = function(){
+    req.onreadystatechange = function () {
         if (req.readyState == 4 && req.status == 200) {
             var resp = req.responseText;
-            if( resp == "success"){
+            if (resp == "success") {
                 window.location.reload();
             }
         }
     }
 
-    req.open("POST" , "signOutProcess.php" , true);
+    req.open("POST", "signOutProcess.php", true);
     req.send();
 
 }
 
-function showPassword3(){
+function showPassword3() {
 
     var pw = document.getElementById("pw");
     var pwi = document.getElementById("pwi");
 
-    if(pw.type == "password"){
+    if (pw.type == "password") {
         pw.type = "text";
         pwi.className = "bi bi-eye-fill text-white";
-    }else{
+    } else {
         pw.type = "password";
         pwi.className = "bi bi-eye-slash-fill text-white";
     }
 
 }
 
-function selectDistrict(){
+function selectDistrict() {
 
     var province_id = document.getElementById("province").value;
 
     var req = new XMLHttpRequest();
-    req.onreadystatechange = function(){
-        if(req.readyState == 4 && req.status == 200){
+    req.onreadystatechange = function () {
+        if (req.readyState == 4 && req.status == 200) {
             var resp = req.responseText;
             document.getElementById("district").innerHTML = resp;
+            selectCity();
         }
     }
 
-    req.open("GET" , "selectDistrictProcess.php?id="+province_id , true);
+    req.open("GET", "selectDistrictProcess.php?id=" + province_id, true);
     req.send();
 
+}
+
+function selectCity() {
+
+}
+
+function changeProfileImg() {
+
+    var img = document.getElementById("profileimage");
+
+    img.onchange = function () {
+        var file = this.files[0];
+        var url = window.URL.createObjectURL(file);
+
+        document.getElementById("img").src = url;
+    }
+
+}
+
+function updateProfile(){
+
+    var fname = document.getElementById("fname");
+    var lname = document.getElementById("lname");
+    var mobile = document.getElementById("mobile");
+    var line1 = document.getElementById("line1");
+    var line2 = document.getElementById("line2");
+    var city = document.getElementById("city");
+    var pcode = document.getElementById("pcode");
+    var image = document.getElementById("profileimage");
+
+    var form = new FormData()
+
+    form.append("f" , fname.value);
+    form.append("l" , lname.value);
+    form.append("m" , mobile.value);
+    form.append("li1" , line1.value);
+    form.append("li2" , line2.value);
+    form.append("c" , city.value);
+    form.append("i" , image.files[0]);
+    form.append("p" , pcode.value);
+
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function(){
+        if(req.readyState == 4 && req.status == 200){
+            var resp = req.responseText;
+            if(resp == "updated" || resp == "saved"){
+                window.location.reload();
+
+            }else if(resp == "Please select a file."){
+                alert("You have not selected any profile image");
+                window.location.reload();
+            }else{
+                alert(resp);
+            }
+
+        } 
+    }
+
+    req.open("POST" , "updateProfielProcess.php" , true);
+    req.send(form)
 }
