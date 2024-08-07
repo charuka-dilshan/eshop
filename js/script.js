@@ -274,3 +274,35 @@ function updateProfile(){
     req.open("POST" , "updateProfielProcess.php" , true);
     req.send(form)
 }
+
+function addColor(){
+
+    var clr = document.getElementById("new_color");
+
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function(){
+        if(req.readyState == 4 && req.status == 200){
+            var resp = req.responseText;
+
+            if(resp == "success"){
+                Swal.fire({
+                    title: "Success!",
+                    text: "Color has registered successfully!",
+                    icon: "success"
+                  });
+            }else{
+                Swal.fire({
+                    title: "Error!",
+                    text: resp,
+                    icon: "error"
+                  });
+            }
+            
+        }
+    }
+
+    req.open("GET" , "saveColorProcess.php?clr="+clr.value , true);
+    req.send();
+
+}
