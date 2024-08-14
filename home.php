@@ -63,11 +63,11 @@ include "connection.php";
                     </div>
 
                     <div class="col-12 col-lg-2 d-grid">
-                        <button class="btn btn-primary mt-3 mb-3">Search</button>
+                        <button class="btn btn-primary mt-3 mb-3" onclick="basicSearch(0);">Search</button>
                     </div>
 
                     <div class="col-12 col-lg-2 mt-2 mt-lg-4 text-center text-lg-start">
-                        <a href="#" class="text-decoration-none link-secondary fw-bold">Advanced</a>
+                        <a href="advancedSearch.php" class="text-decoration-none link-secondary fw-bold">Advanced</a>
                     </div>
 
                 </div>
@@ -140,6 +140,11 @@ include "connection.php";
 
                         <!-- Category Name -->
 
+
+
+
+
+
                         <?php
 
                         $product_rs = Database::search("SELECT * FROM `product` WHERE `category_cat_id` = '" . $category_data2["cat_id"] . "' AND  `status_status_id` = '1' ORDER BY `datetime_added` DESC LIMIT 4 OFFSET 0");
@@ -147,16 +152,17 @@ include "connection.php";
                         $product_num = $product_rs->num_rows;
 
                         if ($product_num > 0) {
-                            for ($z = 0; $z < $product_num; $z++) {
-                                $product_data = $product_rs->fetch_assoc();
                         ?>
-                                <!-- Product -->
-                                <div class="col-12 mb-3">
-                                    <div class="row border border-primary">
+                            <!-- Product -->
+                            <div class="col-12 mb-3">
+                                <div class="row border border-primary">
 
-                                        <div class="col-12">
-                                            <div class="row justify-content-center gap-2">
-
+                                    <div class="col-12">
+                                        <div class="row justify-content-center gap-2">
+                                            <?php
+                                            for ($z = 0; $z < $product_num; $z++) {
+                                                $product_data = $product_rs->fetch_assoc();
+                                            ?>
                                                 <div class="card col-6 col-lg-2 mt-2 mb-2" style="width: 18rem;">
 
                                                     <?php
@@ -211,16 +217,17 @@ include "connection.php";
 
                                                     </div>
                                                 </div>
-
-                                            </div>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
-
                                     </div>
+
                                 </div>
-                            <?php
-                            }
+                            </div>
+                        <?php
                         } else {
-                            ?>
+                        ?>
                             <div class="col-12 text-center border border-1 border-danger">
                                 <p class="h3 fw-bold text-danger mt-3 mb-3">No Items To Priview Yet😋</p>
                             </div>
