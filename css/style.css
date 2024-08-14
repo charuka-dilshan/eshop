@@ -138,11 +138,3 @@
   justify-content: flex-end;
   cursor: pointer;
 }
-
-.qty-inc{
-  border-top-right-radius: 5px;
-}
-
-.qty-dec{
-  border-bottom-right-radius: 5px;
-}
