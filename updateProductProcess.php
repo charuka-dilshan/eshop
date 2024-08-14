@@ -27,15 +27,15 @@ if($length<=3 && $length>0){
         $img_data = $img_rs->fetch_assoc();
 
         unlink($img_data["img_path"]);
-        Database::iud("DELETE FROM `product_img` WHERE `product_id` = '".$pid."'");
+        Database::iud("DELETE FROM `product_image` WHERE `product_id` = '".$pid."'");
     }
 
     for($x = 0 ; $x < $length; $x++){
-        if(isset($_FILES["image".$x])){
-            $image_file = $_FILES["image".$x];
+        if(isset($_FILES["i".$x])){
+            $image_file = $_FILES["i".$x];
             $file_extenction = $image_file["type"];
 
-            if(in_array($file_extention ,$allowed_image_extenctions)){
+            if(in_array($file_extenction ,$allowed_image_extenctions)){
 
                 $new_image_extenction;
 
@@ -50,7 +50,7 @@ if($length<=3 && $length>0){
                 $file_name = "resources//product_images//".$title.$x.uniqid().$new_image_extenction;
                 move_uploaded_file($image_file["tmp_name"] , $file_name);
 
-                Database::iud("INSERT INTO `product_img`(`img_path`,`product_id`) VALUES ('".$file_name."' , '".$product_id."')");
+                Database::iud("INSERT INTO `product_image`(`img_path`,`product_id`) VALUES ('".$file_name."' , '".$pid."')");
 
             }else{
                 echo("Inavlide image type!");
