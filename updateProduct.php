@@ -333,8 +333,8 @@
                                             </div>
                                         </div>
                                         <div class="offset-lg-3 col-12 col-lg-6 d-grid mt-3">
-                                            <input type="file" class="d-none" id="imageuploader" multiple />
-                                            <label for="imageuploader" class="col-12 btn btn-primary" onclick="changeProductImage();">Upload Images</label>
+                                            <input type="file" class="d-none" id="imageUploader" multiple />
+                                            <label for="imageUploader" class="col-12 btn btn-primary" onclick="changeProductImage();">Upload Images</label>
                                         </div>
                                     </div>
                                 </div>

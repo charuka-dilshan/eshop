@@ -459,10 +459,48 @@ function updateProduct(id){
   req.onreadystatechange = function(){
     if(req.readyState == 4 && req.status == 200){
       var resp = req.responseText;
-
     }
   }
 
   req.open("POST" , "updateProductProcess.php" , true)
   req.send(form)
+}
+
+function advancedSearch(x){
+
+  var text = document.getElementById("t");
+  var category = document.getElementById("c1");
+  var brand = document.getElementById("b1");
+  var model = document.getElementById("m");
+  var condition = document.getElementById("c2");
+  var color = document.getElementById("c3");
+  var from = document.getElementById("pf");
+  var to = document.getElementById("pt");
+  var sort = document.getElementById("s");
+
+  var form = new FormData();
+  
+  form.append("t" , text.value);
+  form.append("cat" , category.value);
+  form.append("b" , brand.value);
+  form.append("m" , model.value);
+  form.append("con" , condition.value);
+  form.append("col" , color.value);
+  form.append("pf" , from.value);
+  form.append("pt" , to.value);
+  form.append("s" , sort.value);
+  form.append("page" , x);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function(){
+    if(req.readyState == 4 && req.status == 200){
+      var resp = req.responseText;
+      document.getElementById("view_area").innerHTML = resp;
+    }
+  }
+
+  req.open("POST" , "advancedSearchProcess.php" , true);
+  req.send(form);
+
 }
