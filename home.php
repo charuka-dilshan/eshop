@@ -195,7 +195,7 @@ include "connection.php";
                                                         ?>
                                                             <span class="card-text text-warning fw-bold">In Stock</span><br />
                                                             <span class="card-text text-success fw-bold"><?php echo $product_data["qty"] ?> Items Available</span><br /><br />
-                                                            <a href='#' class="col-12 btn btn-success">Buy Now</a>
+                                                            <a href='singleProductView.php?id=<?php echo $product_data["id"] ?>' class="col-12 btn btn-success">Buy Now</a>
                                                         <?php
                                                         } else {
                                                         ?>

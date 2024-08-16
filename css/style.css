@@ -112,7 +112,7 @@
 
 .mainImg{
   height: 640px;
-  background-image: url("resource/empty.svg");
+  background-image: url("../resources/empty.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
