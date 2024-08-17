@@ -466,6 +466,32 @@ function updateProduct(id) {
   req.send(form)
 }
 
+function basicSearch(x){
+
+  var txt = document.getElementById("basic_search_txt");
+  var select  = document.getElementById("basic_search_select");
+
+  var form = new FormData();
+
+  form.append("t" , txt.value);
+  form.append("s" , select.value);
+  form.append("page" , x);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function(){
+    if(req.readyState == 4 && req.status == 200){
+      var resp = req.responseText;
+      document.getElementById("basicSearchResult").innerHTML = resp;
+    }
+  }
+
+  req.open("POST" , "basicSearchProcess.php" , true);
+  req.send(form);
+
+}
+
+
 function advancedSearch(x) {
 
   var text = document.getElementById("t");
