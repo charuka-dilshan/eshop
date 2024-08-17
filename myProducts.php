@@ -211,7 +211,7 @@ if (isset($_SESSION["u"])) {
                                             $pageno = 1;
                                         }
 
-                                        $product_rs = Database::search("SELECT * FROM `product` WHERE `user_email`= '" . $email . "'");
+                                        $product_rs = Database::search("SELECT * FROM `product` WHERE `user_email`= '". $email ."'");
                                         $product_num = $product_rs->num_rows;
 
                                         $results_per_page = 3;

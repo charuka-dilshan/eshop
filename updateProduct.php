@@ -31,7 +31,7 @@
                 product.model_has_brand_model_has_brand_id = model_has_brand.model_has_brand_id INNER JOIN `model` ON
                 model_has_brand.model_model_id = model.model_id INNER JOIN `brand` ON
                 model_has_brand.brand_brand_id = brand.brand_id INNER JOIN `color` ON
-                product.color_clr_id = color.clr_id WHERE `id` = '" . $pid . "'
+                product.color_color_id = color.color_id WHERE `id` = '" . $pid . "'
                 ");
 
                 $product_data = $product_rs->fetch_assoc();
@@ -166,7 +166,7 @@
 
                                                 <div class="col-12">
                                                     <select class="form-select" disabled>
-                                                        <option><?php echo $product_data["clr_name"] ?></option>
+                                                        <option><?php echo $product_data["color_name"] ?></option>
                                                     </select>
                                                 </div>
 

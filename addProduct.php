@@ -210,8 +210,8 @@ include "connection.php";
 
                                                         ?>
 
-                                                        <option value="<?php echo ($color_data["clr_id"]) ?>">
-                                                            <?php echo ($color_data["clr_name"]) ?>
+                                                        <option value="<?php echo ($color_data["color_id"]) ?>">
+                                                            <?php echo ($color_data["color_name"]) ?>
                                                         </option>
 
                                                         <?php
