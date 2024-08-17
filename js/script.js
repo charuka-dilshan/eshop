@@ -199,7 +199,7 @@ function selectDistrict() {
   req.send();
 }
 
-function selectCity() {}
+function selectCity() { }
 
 function changeProfileImg() {
   var img = document.getElementById("profileimage");
@@ -295,21 +295,21 @@ function changeProductImage() {
     } else {
       alert(
         file_count +
-          " files selected. You can upload only 3 or less than 3 files."
+        " files selected. You can upload only 3 or less than 3 files."
       );
     }
   };
 }
 
-function addProduct(){
+function addProduct() {
   var category = document.getElementById("category");
   var brand = document.getElementById("brand");
   var model = document.getElementById("model");
   var title = document.getElementById("title");
   var condition = 0;
-  if (document.getElementById("b").checked){
+  if (document.getElementById("b").checked) {
     condition = 1;
-  }else if (document.getElementById("u").checked){
+  } else if (document.getElementById("u").checked) {
     condition = 2;
   }
   var clr = document.getElementById("clr");
@@ -322,117 +322,117 @@ function addProduct(){
 
   var form = new FormData;
 
-  form.append("ca" , category.value);
-  form.append("b" , brand.value);
-  form.append("m" , model.value);
-  form.append("t" , title.value);
-  form.append("co" , condition);
-  form.append("clr" , clr.value);
-  form.append("qty" , qty.value);
-  form.append("cost" , cost.value);
-  form.append("dwc" , dwc.value);
-  form.append("doc" , doc.value);
-  form.append("d" , desc.value);
+  form.append("ca", category.value);
+  form.append("b", brand.value);
+  form.append("m", model.value);
+  form.append("t", title.value);
+  form.append("co", condition);
+  form.append("clr", clr.value);
+  form.append("qty", qty.value);
+  form.append("cost", cost.value);
+  form.append("dwc", dwc.value);
+  form.append("doc", doc.value);
+  form.append("d", desc.value);
 
   var file_count = imageUploader.files.length;
 
-  for(var x = 0 ; x<3 ; x++){
-    form.append("image"+ x , imageUploader.files[x]);
+  for (var x = 0; x < 3; x++) {
+    form.append("image" + x, imageUploader.files[x]);
   }
 
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
-    if(req.readyState == 4 && req.status == 200 ){
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
       resp = req.responseText;
 
-      if(resp == "success"){
+      if (resp == "success") {
         alert("product saved successfully");
         window.location.reload();
-      }else{
+      } else {
         alert(resp);
       }
 
     }
   }
 
-  req.open("POST" , "addProductProcess.php" , true);
+  req.open("POST", "addProductProcess.php", true);
   req.send(form);
 
 }
 
-function changeStatus(id){
+function changeStatus(id) {
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
-    if(req.readyState == 4 && req.status == 200){
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
       var resp = this.responseText;
-      if(resp == "Activated" || resp == "Deactivated"){
+      if (resp == "Activated" || resp == "Deactivated") {
         window.location.reload();
-      }else{
+      } else {
         alert(resp);
       }
     }
   }
 
-  req.open("GET" , "changeStatusProcess.php?id="+id , true);
+  req.open("GET", "changeStatusProcess.php?id=" + id, true);
   req.send();
 }
 
-function sort1(x){
+function sort1(x) {
   var search = document.getElementById("s");
   var time = "0";
 
-  if(document.getElementById("n").checked){
-    time = "1";  
-  }else if(document.getElementById("o").checked){
+  if (document.getElementById("n").checked) {
+    time = "1";
+  } else if (document.getElementById("o").checked) {
     time = "2";
   }
 
 
   var qty = "0";
 
-  if(document.getElementById("h").checked){
-    qty = "1";  
-  }else if(document.getElementById("l").checked){
+  if (document.getElementById("h").checked) {
+    qty = "1";
+  } else if (document.getElementById("l").checked) {
     qty = "2";
   }
 
 
   var condition = "0";
 
-  if(document.getElementById("b").checked){
-    condition = "1";  
-  }else if(document.getElementById("u").checked){
+  if (document.getElementById("b").checked) {
+    condition = "1";
+  } else if (document.getElementById("u").checked) {
     condition = "2";
   }
 
   var form = new FormData;
-  form.append("t" , time);
-  form.append("q" , qty);
-  form.append("s" , search.value);
-  form.append("c" , condition);
-  form.append("page" , x);
+  form.append("t", time);
+  form.append("q", qty);
+  form.append("s", search.value);
+  form.append("c", condition);
+  form.append("page", x);
 
-  var req= new XMLHttpRequest();
+  var req = new XMLHttpRequest();
 
   req.onreadystatechange = function () {
-    if(req.readyState == 4 && req.status == 200){
+    if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
       document.getElementById("sort").innerHTML = resp;
     }
   }
 
-  req.open("POST" , "sortProcess.php" , true);
+  req.open("POST", "sortProcess.php", true);
   req.send(form);
 
 }
 
-function clearSort(){
+function clearSort() {
   window.location.reload();
 }
 
-function updateProduct(id){
+function updateProduct(id) {
 
   var title = document.getElementById("t");
   var qty = document.getElementById("q");
@@ -442,31 +442,31 @@ function updateProduct(id){
   var desc = document.getElementById("d");
 
   var form = new FormData();
-  form.append("t" , title.value);
-  form.append("q" , qty.value);
-  form.append("dwc" , dwc.value);
-  form.append("doc" , doc.value);
-  form.append("d" , desc.value);
-  form.append("id" , id);
+  form.append("t", title.value);
+  form.append("q", qty.value);
+  form.append("dwc", dwc.value);
+  form.append("doc", doc.value);
+  form.append("d", desc.value);
+  form.append("id", id);
 
   var count = images.files.length;
 
-  for(var x = 0; x<count ; x++){
-    form.append("i"+x , images.files[x]);
+  for (var x = 0; x < count; x++) {
+    form.append("i" + x, images.files[x]);
   }
 
   var req = new XMLHttpRequest();
-  req.onreadystatechange = function(){
-    if(req.readyState == 4 && req.status == 200){
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
     }
   }
 
-  req.open("POST" , "updateProductProcess.php" , true)
+  req.open("POST", "updateProductProcess.php", true)
   req.send(form)
 }
 
-function advancedSearch(x){
+function advancedSearch(x) {
 
   var text = document.getElementById("t");
   var category = document.getElementById("c1");
@@ -479,75 +479,112 @@ function advancedSearch(x){
   var sort = document.getElementById("s");
 
   var form = new FormData();
-  
-  form.append("t" , text.value);
-  form.append("cat" , category.value);
-  form.append("b" , brand.value);
-  form.append("m" , model.value);
-  form.append("con" , condition.value);
-  form.append("col" , color.value);
-  form.append("pf" , from.value);
-  form.append("pt" , to.value);
-  form.append("s" , sort.value);
-  form.append("page" , x);
+
+  form.append("t", text.value);
+  form.append("cat", category.value);
+  form.append("b", brand.value);
+  form.append("m", model.value);
+  form.append("con", condition.value);
+  form.append("col", color.value);
+  form.append("pf", from.value);
+  form.append("pt", to.value);
+  form.append("s", sort.value);
+  form.append("page", x);
 
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
-    if(req.readyState == 4 && req.status == 200){
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
       document.getElementById("view_area").innerHTML = resp;
     }
   }
 
-  req.open("POST" , "advancedSearchProcess.php" , true);
+  req.open("POST", "advancedSearchProcess.php", true);
   req.send(form);
 }
 
-function loadMainImg(x){
+function loadMainImg(x) {
 
-  var sample_image = document.getElementById("productImg"+x).src;
+  var sample_image = document.getElementById("productImg" + x).src;
   var mainImg = document.getElementById("mainImg");
 
-  mainImg.style.backgroundImage = "url("+sample_image+")";
+  mainImg.style.backgroundImage = "url(" + sample_image + ")";
 
 }
 
-function checkQty(qty){
+function checkQty(qty) {
   var input = document.getElementById("qty_input");
 
-  if (input.value <= 0 ) {
+  if (input.value <= 0) {
     alert("Quantity must be one or more");
   } else if (input.value > qty) {
-    alert ("Insufficient Quantity")
+    alert("Insufficient Quantity")
     input.value = qty;
   }
 }
 
-function qty_inc(qty){
+function qty_inc(qty) {
 
   var input = document.getElementById("qty_input");
 
-  if(input.value < qty){
+  if (input.value < qty) {
     var new_val = parseInt(input.value) + 1;
     input.value = new_val;
-  }else{
+  } else {
     alert("Maximum Value Reached.");
     input.value = qty;
   }
 
 }
 
-function qty_dec(){
+function qty_dec() {
 
   var input = document.getElementById("qty_input");
 
-  if(input.value > 1){
+  if (input.value > 1) {
     var new_val = parseInt(input.value) - 1;
     input.value = new_val;
-  }else{
+  } else {
     alert("Minimum Value Reached.");
     input.value = 1;
   }
+
+}
+
+function addToWatchList(id) {
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+      if (resp == "removed" || resp == "added") {
+        window.location.reload();
+      } else {
+        alert(resp);
+      }
+    }
+  }
+
+  req.open("GET", "addToWatchlistProcess.php?id=" + id, true);
+  req.send();
+}
+
+function removeFromWatchlist(id) {
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+      if (resp == "deleted");
+      window.location.reload();
+    } else {
+      alert(resp);
+    }
+  }
+
+  req.open("GET", "removeWatchlistProcess.php?id=" + id, true);
+  req.send();
 
 }

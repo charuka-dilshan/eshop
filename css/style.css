@@ -138,3 +138,11 @@
   justify-content: flex-end;
   cursor: pointer;
 }
+
+.emptyView{
+  height: 400px;
+  background-image: url("../resources/watchlistEmptyView.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}

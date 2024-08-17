@@ -211,9 +211,30 @@ include "connection.php";
                                                             <i class="bi bi-cart-plus-fill text-white fs-5"></i>
                                                         </button>
 
-                                                        <button class="col-12 btn btn-outline-light mt-2 border border-primary">
-                                                            <i class="bi bi-heart-fill text-danger fs-5"></i>
-                                                        </button>
+                                                        <?php
+
+                                                        if (isset($_SESSION["u"])) {
+                                                            $watchlist_rs = Database::search("SELECT * FROM `watchlist` WHERE `user_email` = '" . $_SESSION['u']['email'] . "' AND `product_id` = '" . $product_data['id'] . "'");
+                                                            $watchlist_num = $watchlist_rs->num_rows;
+
+                                                            if ($watchlist_num == 1) {
+                                                        ?>
+                                                                <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchList(<?php $product_data['id'] ?>);">
+                                                                    <i class="bi bi-heart-fill text-danger fs-5" id="heart<?php echo ($product_data["id"]); ?>"></i>
+                                                                </button>
+                                                            <?php
+                                                            } else {
+                                                            ?>
+                                                                <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchList(<?php $product_data['id'] ?>);">
+                                                                    <i class="bi bi-heart-fill text-dark fs-5" id="heart<?php echo ($product_data["id"]); ?>"></i>
+                                                                </button>
+                                                        <?php
+                                                            }
+                                                        }
+
+                                                        ?>
+
+
 
                                                     </div>
                                                 </div>
