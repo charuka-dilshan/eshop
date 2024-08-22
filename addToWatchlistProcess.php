@@ -20,7 +20,7 @@ if (isset($_SESSION["u"])) {
             echo("removed");
 
         }else{
-            Database::iud("INSERT INTO `watchlist`(`user_email` , `product_id`) VALUES ('".$email."' , '".$pid."')");
+            Database::iud("INSERT INTO `watchlist`(`product_id` , `user_email`) VALUES ('".$pid."' , '".$email."')");
             echo ("added");
         }
         

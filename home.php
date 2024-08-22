@@ -218,14 +218,15 @@ include "connection.php";
                                                             $watchlist_num = $watchlist_rs->num_rows;
 
                                                             if ($watchlist_num == 1) {
+                                                                $watchlist_data = $watchlist_rs->fetch_assoc();
                                                         ?>
-                                                                <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchList(<?php $product_data['id'] ?>);">
+                                                                <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="removeFromWatchlist(<?php echo $watchlist_data['w_id'] ?>);">
                                                                     <i class="bi bi-heart-fill text-danger fs-5" id="heart<?php echo ($product_data["id"]); ?>"></i>
                                                                 </button>
                                                             <?php
                                                             } else {
                                                             ?>
-                                                                <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchList(<?php $product_data['id'] ?>);">
+                                                                <button class="col-12 btn btn-outline-light mt-2 border border-primary" onclick="addToWatchList(<?php echo $product_data['id'] ?>);">
                                                                     <i class="bi bi-heart-fill text-dark fs-5" id="heart<?php echo ($product_data["id"]); ?>"></i>
                                                                 </button>
                                                         <?php

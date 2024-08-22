@@ -580,7 +580,6 @@ function qty_dec() {
 
 function addToWatchList(id) {
   var req = new XMLHttpRequest();
-
   req.onreadystatechange = function () {
     if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
@@ -599,15 +598,15 @@ function addToWatchList(id) {
 function removeFromWatchlist(id) {
 
   var req = new XMLHttpRequest();
-
   req.onreadystatechange = function () {
     if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
-      if (resp == "deleted");
-      window.location.reload();
-    } else {
-      alert(resp);
-    }
+      if (resp == "deleted"){
+        window.location.reload();
+      }else {
+        alert(resp);
+      }
+    } 
   }
 
   req.open("GET", "removeWatchlistProcess.php?id=" + id, true);
