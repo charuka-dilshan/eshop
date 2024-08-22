@@ -54,8 +54,6 @@ include "connection.php";
                                 }
 
                                 ?>
-
-                                <option value="2">Laptops</option>
                             </select>
 
                         </div>
