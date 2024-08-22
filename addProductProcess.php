@@ -40,7 +40,7 @@ $date = $d->format("Y-m-d H:i:s");
 
 $status = 1;
 
-Database::iud("INSERT INTO `product`(`title` , `price` , `qty` , `description` , `datetime_added` , `delivery_fee_colombo` , `delivery_fee_other` , `model_has_brand_model_has_brand_id` , `condition_condition_id` , `category_cat_id` , `status_status_id` , `color_clr_id` , `user_email`) 
+Database::iud("INSERT INTO `product`(`title` , `price` , `qty` , `description` , `datetime_added` , `delivery_fee_colombo` , `delivery_fee_other` , `model_has_brand_model_has_brand_id` , `condition_condition_id` , `category_cat_id` , `status_status_id` , `color_color_id` , `user_email`) 
 VALUES ('".$title."' , '".$cost."' , '".$qty."' , '".$desc."' , '".$date."' , '".$dwc."' , '".$doc."' , '".$mhb_id."' , '".$condition."' , '".$category."' , '".$status."' , '".$clr."' , '".$email."')");
 
 $product_id = Database::$connection->insert_id;
