@@ -613,3 +613,43 @@ function removeFromWatchlist(id) {
   req.send();
 
 }
+
+function addToCartPocess(i,q){
+
+  alert (i);
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function(){
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText
+      alert(resp);
+    }
+  }
+
+  req.open("GET" , "addToCartProcess.php?id="+i+"&qty="+q , true);
+  req.send();
+
+}
+
+function deleteFromCart(id){
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function(){
+    if(req.readyState == 4 && req.status == 200){
+      var resp = req.responseText;
+      
+      if (resp == "removed") {
+        alert ("Product removed from the cart");
+        window,location.reload();
+      }else{
+        alert(resp);
+      }
+
+    }
+  }
+
+  req.open("GET" , "deleteFromCartProcess.php?id="+id , true);
+  req.send();
+
+}

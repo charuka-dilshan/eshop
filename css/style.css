@@ -146,3 +146,11 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.emptyCart{
+  height: 400px;
+  background-image: url("../resources/emptycart.svg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}

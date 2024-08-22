@@ -196,20 +196,24 @@ include "connection.php";
                                                             <span class="card-text text-warning fw-bold">In Stock</span><br />
                                                             <span class="card-text text-success fw-bold"><?php echo $product_data["qty"] ?> Items Available</span><br /><br />
                                                             <a href='singleProductView.php?id=<?php echo $product_data["id"] ?>' class="col-12 btn btn-success">Buy Now</a>
+
+                                                            <button class="col-12 btn btn-dark mt-2" onclick="addToCartPocess(<?php echo $product_data['id'];?>, <?php echo $product_data['qty'];?>);">
+                                                                <i class="bi bi-cart-plus-fill text-white fs-5"></i>
+                                                            </button>
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <span class="card-text text-danger fw-bold">In Stock</span><br />
+                                                            <span class="card-text text-danger fw-bold">Out of Stock</span><br />
                                                             <span class="card-text text-danger fw-bold">00 Items Available</span><br /><br />
                                                             <a href='#' class="col-12 btn btn-success disabled">Buy Now</a>
+
+                                                            <button class="col-12 btn btn-dark mt-2 disabled">
+                                                                <i class="bi bi-cart-plus-fill text-white fs-5"></i>
+                                                            </button>
                                                         <?php
                                                         }
-
                                                         ?>
 
-                                                        <button class="col-12 btn btn-dark mt-2">
-                                                            <i class="bi bi-cart-plus-fill text-white fs-5"></i>
-                                                        </button>
 
                                                         <?php
 

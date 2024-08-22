@@ -35,7 +35,7 @@
                 watchlist.user_email = '" . $_SESSION["u"]["email"] . "'");
 
                 $watchlist_num = $watchlist_rs->num_rows;
-            }
+
 
             ?>
 
@@ -76,7 +76,7 @@
                                 </nav>
                                 <nav class="nav nav-pills flex-column">
                                     <a class="nav-link active" aria-current="page" href="#">My Watchlist</a>
-                                    <a class="nav-link" href="#">My Cart</a>
+                                    <a class="nav-link" href="cart.php  ">My Cart</a>
                                     <a class="nav-link" href="#">Recents</a>
                                 </nav>
                             </div>
@@ -168,6 +168,12 @@
                     </div>
                 </div>
             </div>
+
+            <?php
+            }else{
+                echo ("Longin to your account to use watchlist!");
+            }
+            ?>
 
             <?php include "footer.php"; ?>
 
