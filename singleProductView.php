@@ -215,7 +215,7 @@ if (isset($_GET["id"])) {
                                                                         <div class="col-12 mt-5">
                                                                             <div class="row">
                                                                                 <div class="col-4 d-grid">
-                                                                                    <button class="btn btn-success">Buy Now</button>
+                                                                                    <button type="submit" id="payhere-payment" class="btn btn-success" onclick="payNow(<?php echo $pid ; ?>);">Buy now</button>
                                                                                 </div>
                                                                                 <div class="col-4 d-grid">
                                                                                     <button class="btn btn-primary">Add To Cart</button>
@@ -265,9 +265,9 @@ if (isset($_GET["id"])) {
                                             <div class="card" style="width: 18rem;">
                                                 <img src="resources/mobile_images/iphone12.jpg" class="card-img-top" />
                                                 <div class="card-body text-center">
-                                                    <h5 class="card-title fw-bold"><?php echo $product_data["title"];?></h5>
-                                                    <h6 class="card-text"><?php echo $product_data["price"];?></h6>
-                                                    <h6 class="card-text"><?php echo $product_data["qty"];?></h6>
+                                                    <h5 class="card-title fw-bold"><?php echo $product_data["title"]; ?></h5>
+                                                    <h6 class="card-text"><?php echo $product_data["price"]; ?></h6>
+                                                    <h6 class="card-text"><?php echo $product_data["qty"]; ?></h6>
                                                     <div class="col-12">
                                                         <div class="row">
                                                             <div class="col-12 col-lg-6 d-grid">

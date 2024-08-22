@@ -280,6 +280,7 @@
 
     <script src="js/bootstrap.bundle.js"></script>
     <script src="js/script.js"></script>
+    <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
 
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))

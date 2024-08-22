@@ -154,3 +154,10 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+.invoiceHeaderImage{
+  height: 80px;
+  background-image: url("../resources/logo.svg");
+  background-size:contain;
+  background-repeat: no-repeat;
+}

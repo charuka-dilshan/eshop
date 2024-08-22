@@ -467,27 +467,27 @@ function updateProduct(id) {
   req.send(form)
 }
 
-function basicSearch(x){
+function basicSearch(x) {
 
   var txt = document.getElementById("basic_search_txt");
-  var select  = document.getElementById("basic_search_select");
+  var select = document.getElementById("basic_search_select");
 
   var form = new FormData();
 
-  form.append("t" , txt.value);
-  form.append("s" , select.value);
-  form.append("page" , x);
+  form.append("t", txt.value);
+  form.append("s", select.value);
+  form.append("page", x);
 
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
-    if(req.readyState == 4 && req.status == 200){
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
       document.getElementById("basicSearchResult").innerHTML = resp;
     }
   }
 
-  req.open("POST" , "basicSearchProcess.php" , true);
+  req.open("POST", "basicSearchProcess.php", true);
   req.send(form);
 
 }
@@ -602,12 +602,12 @@ function removeFromWatchlist(id) {
   req.onreadystatechange = function () {
     if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
-      if (resp == "deleted"){
+      if (resp == "deleted") {
         window.location.reload();
-      }else {
+      } else {
         alert(resp);
       }
-    } 
+    }
   }
 
   req.open("GET", "removeWatchlistProcess.php?id=" + id, true);
@@ -615,42 +615,153 @@ function removeFromWatchlist(id) {
 
 }
 
-function addToCartPocess(i,q){
+function addToCartPocess(i, q) {
 
-  alert (i);
+  alert(i);
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
+  req.onreadystatechange = function () {
     if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText
       alert(resp);
     }
   }
 
-  req.open("GET" , "addToCartProcess.php?id="+i+"&qty="+q , true);
+  req.open("GET", "addToCartProcess.php?id=" + i + "&qty=" + q, true);
   req.send();
 
 }
 
-function deleteFromCart(id){
+function deleteFromCart(id) {
 
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
-    if(req.readyState == 4 && req.status == 200){
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
       var resp = req.responseText;
-      
+
       if (resp == "removed") {
-        alert ("Product removed from the cart");
-        window,location.reload();
-      }else{
+        alert("Product removed from the cart");
+        window, location.reload();
+      } else {
         alert(resp);
       }
 
     }
   }
 
-  req.open("GET" , "deleteFromCartProcess.php?id="+id , true);
+  req.open("GET", "deleteFromCartProcess.php?id=" + id, true);
   req.send();
 
+}
+
+function payNow(id) {
+
+  var qty = document.getElementById("qty_input").value;
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+
+      var obj = JSON.parse(resp);
+
+      var mail = obj["umail"];
+      var amount = obj["amount"];
+
+
+      if (resp == "1") {
+        alert("Please log into your account");
+        window.location = "index.php";
+      } else if (resp == "2") {
+        alert("Please update your address");
+        window.location = "userProfile.php";
+      } else {
+
+        // Payment completed. It can be a successful failure.
+        payhere.onCompleted = function onCompleted(orderId) {
+          console.log("Payment completed. OrderID:" + orderId);
+          // Note: validate the payment and show success or failure page to the customer
+          saveInvoice(orderId , id , mail , amount , qty );
+        };
+
+        // Payment window closed
+        payhere.onDismissed = function onDismissed() {
+          // Note: Prompt user to pay again or show an error page
+          console.log("Payment dismissed");
+        };
+
+        // Error occurred
+        payhere.onError = function onError(error) {
+          // Note: show an error page
+          console.log("Error:" + error);
+        };
+
+        // Put the payment variables here
+        var payment = {
+          "sandbox": true,
+          "merchant_id": obj["mid"],    // Replace your Merchant ID
+          "return_url": "http://localhost/eshop/singleProductView.php?id=" + id,     // Important
+          "cancel_url": "http://localhost/eshop/singleProductView.php?id=" + id,     // Important
+          "notify_url": "http://sample.com/notify",
+          "order_id": obj["id"],
+          "items": obj["item"],
+          "amount": obj["amount"] + ".00",
+          "currency": obj["currency"],
+          "hash": obj["hash"], // *Replace with generated hash retrieved from backend
+          "first_name": obj["fname"],
+          "last_name": obj["lname"],
+          "email": obj["email"],
+          "phone": obj["mobile"],
+          "address": obj["address"],
+          "city": obj["city"],
+          "country": "Sri Lanka",
+          "delivery_address": obj["address"],
+          "delivery_city": obj["city"],
+          "delivery_country": "Sri Lanka",
+          "custom_1": "",
+          "custom_2": ""
+        };
+
+        // Show the payhere.js popup, when "PayHere Pay" is clicked
+        // document.getElementById('payhere-payment').onclick = function (e) {
+        payhere.startPayment(payment);
+      // };
+
+    }
+
+  }
+}
+
+req.open("GET", "buyNowProcess.php?id=" + id + "&qty=" + qty, true);
+req.send();
+
+}
+
+function saveInvoice(orderId , id , mail , amount , qty ){
+
+  var form = new FormData();
+
+  form.append("o" , orderId);
+  form.append("i" , id);
+  form.append("m" , mail);
+  form.append("a" , amount);
+  form.append("q" , qty);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function(){
+    if (req.status == 200 && req.readyState == 4) {
+      var resp = req.responseText;
+      if (resp == "success") {
+        window.location = "invoice.php?id="+orderId;
+      }else{
+        alert(resp);
+      }
+    }
+  }
+
+  req.open("POST" , "saveInvoiceProcess.php" , true);
+  req.send(form);
 }
