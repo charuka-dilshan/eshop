@@ -18,14 +18,31 @@
 
     <div class="container-fluid">
         <div class="row">
-            <?php include "header.php";?>
+            <?php include "header.php";
 
+            include "connection.php";
+
+            if (isset($_SESSION["u"])) {
+
+                $mail = $_SESSION["u"]["email"];
+                $oid = $_GET["id"];
+
+                $invoice_rs = Database::search("SELECT * FROM `invoice` INNER JOIN `user` ON
+                invoice.user_email = user.email INNER JOIN `product` ON
+                invoice.product_id = product.id WHERE `order_id` = '" . $oid . "' ");
+
+                $invoice_data = $invoice_rs->fetch_assoc();
+
+            ?>
                 <div class="col-12">
                     <hr />
                 </div>
 
                 <div class="col-12 btn-toolbar justify-content-end">
-                    <button class="btn btn-dark me-2"><i class="bi bi-printer-fill"></i> Print</button>
+                    <button class="btn btn-dark me-2" onclick="printInvoice();">
+                        <i class="bi bi-printer-fill"></i>
+                        Print
+                    </button>
                     <button class="btn btn-danger me-2"><i class="bi bi-filetype-pdf"></i> Export as PDF</button>
                 </div>
 
@@ -59,18 +76,23 @@
 
                         <div class="col-12 mb-4">
                             <div class="row">
+                                <?php
 
+                                $address_rs = Database::search("SELECT * FROM `user_has_address` WHERE `user_email` = '" . $mail . "'");
+                                $address_data = $address_rs->fetch_assoc();
+
+                                ?>
                                 <div class="col-6">
                                     <h5 class="fw-bold">INVOICE TO :</h5>
-                                    <h2>Sahan Perera</h2>
-                                    <span>Kandy Rd, Gampaha</span><br />
-                                    <span>sahan@gmail.com</span>
+                                    <h2><?php echo ($invoice_data["fname"] . " " . $invoice_data["lname"]); ?></h2>
+                                    <span><?php echo ($address_data["line1"] . ", " . $address_data["line2"]); ?></span><br />
+                                    <span><?php echo $mail; ?></span>
                                 </div>
 
                                 <div class="col-6 text-end mt-4">
-                                    <h1 class="text-primary">INVOICE 100</h1>
+                                    <h1 class="text-primary">INVOICE <?php echo ($invoice_data["invoice_id"]); ?></h1>
                                     <span class="fw-bold">Data & Time of Invoice : </span>&nbsp;
-                                    <span class="fw-bold">2020-12-12 08:30:48</span>
+                                    <span class="fw-bold"><?php echo ($invoice_data["date"]); ?></span>
                                 </div>
 
                             </div>
@@ -89,32 +111,47 @@
                                 </thead>
                                 <tbody>
                                     <tr style="height: 72px;">
-                                        <td class="bg-primary text-white fs-3">100</td>
+                                        <td class="bg-primary text-white fs-3"><?php echo ($invoice_data["invoice_id"]); ?></td>
                                         <td>
-                                            <span class="fw-bold text-primary text-decoration-underline p-2">50</span><br />
-                                            <span class="fw-bold text-primary fs-3 p-2">Apple iPhone 13</span>
+                                            <span class="fw-bold text-primary text-decoration-underline p-2"><?php echo $oid; ?></span><br />
+                                            <span class="fw-bold text-primary fs-3 p-2"><?php echo ($invoice_data["title"]); ?></span>
                                         </td>
-                                        <td class="fw-bold fs-6 text-end pt-3 bg-secondary text-white">Rs. 300000 .00</td>
-                                        <td class="fw-bold fs-6 text-end pt-3">10</td>
-                                        <td class="fw-bold fs-6 text-end pt-3 bg-secondary text-white">Rs. 3000000 .00</td>
+                                        <td class="fw-bold fs-6 text-end pt-3 bg-secondary text-white">Rs. <?php echo ($invoice_data["price"]); ?> .00</td>
+                                        <td class="fw-bold fs-6 text-end pt-3"><?php echo ($invoice_data["invoice_qty"]); ?></td>
+                                        <td class="fw-bold fs-6 text-end pt-3 bg-secondary text-white">Rs. <?php echo ($invoice_data["invoice_qty"] * $invoice_data["price"]); ?> .00</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
-                                    
+                                    <?php
+
+                                    $city_rs = Database::search("SELECT * FROM `city` WHERE `city_id` = '" . $address_data["city_city_id"] . "'");
+                                    $city_data = $city_rs->fetch_assoc();
+
+                                    $delivery = 0;
+
+                                    if ($city_data["district_district_id"] == 4) {
+                                        $delivery = $invoice_data["delivery_fee_colombo"];
+                                    } else {
+                                        $delivery = $invoice_data["delivery_fee_other"];
+                                    }
+
+                                    $sub_total = $invoice_data["invoice_qty"] * $invoice_data["price"];
+
+                                    ?>
                                     <tr>
                                         <td colspan="3" class="border-0"></td>
                                         <td class="fs-5 text-end fw-bold">SUBTOTAL</td>
-                                        <td class="text-end">Rs. 3000000 .00</td>
+                                        <td class="text-end">Rs. <?php echo $sub_total; ?> .00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" class="border-0"></td>
                                         <td class="fs-5 text-end fw-bold border-primary">Delivery Fee</td>
-                                        <td class="text-end border-primary">Rs. 1000 .00</td>
+                                        <td class="text-end border-primary">Rs. <?php echo $delivery; ?> .00</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3" class="border-0"></td>
                                         <td class="fs-5 text-end fw-bold border-primary text-primary">GRAND TOTAL</td>
-                                        <td class="fs-5 text-end fw-bold border-primary text-primary">Rs. 3001000 .00</td>
+                                        <td class="fs-5 text-end fw-bold border-primary text-primary">Rs. <?php echo ($invoice_data["total"]); ?> .00</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -146,7 +183,11 @@
 
                     </div>
                 </div>
+            <?php
 
+            }
+
+            ?>
             <?php include "footer.php"; ?>
         </div>
     </div>

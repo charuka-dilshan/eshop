@@ -765,3 +765,13 @@ function saveInvoice(orderId , id , mail , amount , qty ){
   req.open("POST" , "saveInvoiceProcess.php" , true);
   req.send(form);
 }
+
+function printInvoice(){
+
+  var restorePage = document.body.innerHTML;
+  var page = document.getElementById("page").innerHTML;
+  document.body.innerHTML = page;
+  window.print();
+  document.body.innerHTML = restorePage;
+
+}

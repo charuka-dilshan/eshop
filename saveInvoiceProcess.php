@@ -24,7 +24,7 @@ if(isset($_SESSION["u"])){
     $d->setTimezone($tz);
     $date = $d->format("Y-m-d H:i:s");
 
-    Database::iud("INSERT INTO `invoice`(`order_id` , `date` , `total` , `qty` , `status` , `user_email` , `product_id`)
+    Database::iud("INSERT INTO `invoice`(`order_id` , `date` , `total` , `invoice_qty` , `status` , `user_email` , `product_id`)
     VALUES ('".$order_id."' , '".$date."' , '".$amount."' , '".$qty."' , '0' , '".$mail."' ,'".$pid."' )");
 
     echo ("success");
