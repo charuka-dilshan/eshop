@@ -58,6 +58,7 @@ if (isset($_SESSION["u"])) {
         );
 
         $array["id"] = $order_id;
+        $array["qty"] = $qty;
         $array["item"] = $item;
         $array["amount"] = $amount;
         $array["fname"] = $fname;

@@ -25,7 +25,7 @@ if (isset($_GET["id"])) {
             <title><?php echo $product_data["title"] ?> | eShop</title>
 
             <link rel="stylesheet" href="css/bootstrap.css" />
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
             <link rel="stylesheet" href="css/style.css" />
 
             <link rel="icon" href="resources/logo.svg" />
@@ -156,8 +156,11 @@ if (isset($_GET["id"])) {
                                                 <div class="row border-bottom border-dark">
                                                     <div class="col-12 my-2">
                                                         <div class="row">
-                                                            <div class="col-12 col-lg-6 border border-1 border-dark text-center">
+                                                            <div class="col-10 col-lg-4 border border-1 border-dark text-center">
                                                                 <span class="fs-5 text-primary"><b>Seller : </b><?php echo $product_data["fname"] ?></span>
+                                                            </div>
+                                                            <div class="col-2 border border-1 border-dark text-center d-grid">
+                                                                <a href="messages.php?id=<?php echo $product_data["email"]; ?>" class="btn btn-success"><i class="bi bi-envelope-arrow-up"></i></a>
                                                             </div>
                                                             <div class="col-12 col-lg-6 border border-1 border-dark text-center">
                                                                 <span class="fs-5 text-primary"><b>Sold : </b>100 Items</span>

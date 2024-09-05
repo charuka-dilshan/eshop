@@ -666,9 +666,9 @@ function payNow(id) {
       var resp = req.responseText;
 
       var obj = JSON.parse(resp);
-
       var mail = obj["umail"];
       var amount = obj["amount"];
+      var qty = obj["qty"];
 
 
       if (resp == "1") {
@@ -683,7 +683,7 @@ function payNow(id) {
         payhere.onCompleted = function onCompleted(orderId) {
           console.log("Payment completed. OrderID:" + orderId);
           // Note: validate the payment and show success or failure page to the customer
-          saveInvoice(orderId , id , mail , amount , qty );
+          saveInvoice(orderId, id, mail, amount, qty);
         };
 
         // Payment window closed
@@ -727,51 +727,214 @@ function payNow(id) {
         // Show the payhere.js popup, when "PayHere Pay" is clicked
         // document.getElementById('payhere-payment').onclick = function (e) {
         payhere.startPayment(payment);
-      // };
+        // };
+
+      }
 
     }
-
   }
+
+  req.open("GET", "buyNowProcess.php?id=" + id + "&qty=" + qty, true);
+  req.send();
+
 }
 
-req.open("GET", "buyNowProcess.php?id=" + id + "&qty=" + qty, true);
-req.send();
-
-}
-
-function saveInvoice(orderId , id , mail , amount , qty ){
+function saveInvoice(orderId, id, mail, amount, qty) {
 
   var form = new FormData();
 
-  form.append("o" , orderId);
-  form.append("i" , id);
-  form.append("m" , mail);
-  form.append("a" , amount);
-  form.append("q" , qty);
+  form.append("o", orderId);
+  form.append("i", id);
+  form.append("m", mail);
+  form.append("a", amount);
+  form.append("q", qty);
 
   var req = new XMLHttpRequest();
 
-  req.onreadystatechange = function(){
+  req.onreadystatechange = function () {
     if (req.status == 200 && req.readyState == 4) {
       var resp = req.responseText;
       if (resp == "success") {
-        window.location = "invoice.php?id="+orderId;
-      }else{
+        window.location = "invoice.php?id=" + orderId;
+      } else {
         alert(resp);
       }
     }
   }
 
-  req.open("POST" , "saveInvoiceProcess.php" , true);
+  req.open("POST", "saveInvoiceProcess.php", true);
   req.send(form);
 }
 
-function printInvoice(){
+function printInvoice() {
 
   var restorePage = document.body.innerHTML;
   var page = document.getElementById("page").innerHTML;
   document.body.innerHTML = page;
   window.print();
   document.body.innerHTML = restorePage;
+
+}
+
+function addFeedback(id) {
+
+  var fbmodal = document.getElementById("feedbackModal" + id);
+
+  m = new bootstrap.Modal(fbmodal)
+  m.show();
+}
+
+function saveFeedback(id) {
+
+  var type;
+
+  if (document.getElementById("type1").checked) {
+    type = 1;
+  } else if (document.getElementById("type2").checked) {
+    type = 2;
+  } else if (document.getElementById("type3").checked) {
+    type = 3;
+  }
+
+  var feedback = document.getElementById("feed");
+  var product_id = id;
+
+  var form = new FormData();
+
+  form.append("t", type);
+  form.append("f", feedback.value);
+  form.append("i", product_id);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+
+      if (resp == "success") {
+        alert("Thankyou for your feedback");
+        m.hide();
+      } else {
+        alert(resp);
+      }
+
+    }
+  }
+
+  req.open("POST", "saveFeedbackProcess.php", true);
+  req.send(form);
+
+}
+
+
+var c;
+
+function openChat(id) {
+
+  var chatModal = document.getElementById("chatModal" + id);
+  c = new bootstrap.Modal(chatModal);
+  c.show();
+
+}
+
+function sendMessage() {
+
+  var msg = document.getElementById("m");
+  var to = document.getElementById("r");
+
+  var form = new FormData();
+
+  form.append("m", msg.value);
+  form.append("t", to.value);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+      if (resp == "success") {
+        alert("Message Sent!");
+        window.location.reload();
+      } else {
+        alert(resp);
+      }
+    }
+  }
+
+  req.open("POST", "sendMessageProcess.php", true);
+  req.send(form);
+
+}
+
+function viewMsg(from) {
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+      document.getElementById("chat_box").innerHTML = resp;
+      alert(resp);
+    }
+  }
+
+  req.open("GET", "viewMsgProcess.php?e=" + from, true);
+  req.send();
+
+}
+
+var avm;
+
+function adminVerification() {
+
+
+
+  var email = document.getElementById("e");
+
+  var form = new FormData();
+  form.append("e", email.value);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+      if (resp = "success") {
+        alert("Check your email for verificat5tion code");
+        var adminvmodal = document.getElementById("adminVerificationModal");
+        avm = new bootstrap.Modal(adminvmodal);
+        avm.show;
+      }else{
+      alert(resp);
+      }
+    }
+  }
+
+  req.open("POST", "adminVerificationProcess.php", true);
+  req.send(form);
+
+
+}
+
+
+function verify(){
+
+  var code = document.getElementById("vcode");
+
+  var form = new FormData();
+  form.append("vc", code.value);
+
+  var req = new XMLHttpRequest();
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      var resp = req.responseText;
+      alert(resp);
+    }
+  }
+
+  req.open("POST", "VerificationProcess.php", true);
+  req.send(form);
+
 
 }

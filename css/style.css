@@ -161,3 +161,9 @@
   background-size:contain;
   background-repeat: no-repeat;
 }
+
+.message_box,
+.chat_box{
+    height: 510px;
+    overflow-y: scroll;
+}

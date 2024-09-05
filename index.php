@@ -156,7 +156,7 @@ require "connection.php";
                             </div>
 
                             <div class="col-12 d-grid">
-                                <button class="btn btn-success">Go To eShop Admins</button>
+                                <a href="adminSignin.php" class="btn btn-success">Go To eShop Admins</a>
                             </div>
                         </div>
                     </div>
